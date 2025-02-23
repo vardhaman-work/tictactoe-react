@@ -11,15 +11,17 @@ import circle_icon from "../Assets/circle.png";
 import cross_icon from "../Assets/cross.png";
 import Sound from "../Assets/sound.mp3";
 import setting_icon from "../Assets/setting.svg";
+import { NoneEmpty } from "../utility/NoneEmpty";
+import { playClickSound } from "../utility/playClickSound";
 
 let data = ["","","","","","","","",""]
 
 const TicTacToe = () => {
-
   let [count, setCount] = useState(0);
   let [lock, setLock] = useState(false);
   let [matchWin, setMatchWin] = useState(false);
   let [autoPlay, setAutoPlay] = useState(false);
+  let [sound, setSound] = useState(true);
   let titleRef = useRef(null);
   const { width, height } = useWindowSize();
 
@@ -27,10 +29,6 @@ const TicTacToe = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  useEffect(() => {
-    handleShow();
-  },[])
 
   let audio = new Audio(Sound);
 
@@ -47,8 +45,12 @@ const TicTacToe = () => {
 
   let box_array = [box1, box2, box3, box4, box5, box6, box7, box8, box9]
 
-  const toggle = (e, num) => {
 
+  useEffect(() => {
+    handleShow();
+  },[])
+  
+  const toggle = (e, num) => {
     if(lock){
       return 0
     }
@@ -67,17 +69,14 @@ const TicTacToe = () => {
 
     checkWin();
 
+    if(sound){
+      playClickSound();
+    }
+
     if(autoPlay && e.isTrusted){
       boardRef.current.classList.add("pe-none")
       setTimeout(autoPlayHandler,1000)
     }
-  }
-
-  function NoneEmpty(arr) {
-    for(var i=0; i<arr.length; i++) {
-      if(arr[i] === "") return false;
-    }
-    return true;
   }
 
   function autoPlayHandler(){
@@ -166,7 +165,11 @@ const TicTacToe = () => {
   }
 
   const checkboxChangeHandler = () => {
-      setAutoPlay(!autoPlay);
+      setSound(!sound);
+  }
+
+  const soundChangeHandler = () => {
+    setSound(!sound);
   }
 
   const formSubmitHandler = (e) => {
@@ -174,6 +177,10 @@ const TicTacToe = () => {
     
     if(e.target.elements.autoplay.checked){
       setAutoPlay(true);
+    }
+
+    if(e.target.elements.sound.checked){
+      setSound(true);
     }
     
     handleClose();
@@ -212,6 +219,17 @@ const TicTacToe = () => {
             <Col xs="auto">
               <label className="switch">
                 <input name='autoplay' type="checkbox" onChange={checkboxChangeHandler} checked={autoPlay} />
+                <span className="slider round"></span>
+              </label>
+            </Col>
+          </Row>
+          <Row className='mt-4'>
+            <Col>
+              <strong>Sound</strong>
+            </Col>
+            <Col xs="auto">
+              <label className="switch">
+                <input name='sound' type="checkbox" onChange={soundChangeHandler} checked={sound} />
                 <span className="slider round"></span>
               </label>
             </Col>
