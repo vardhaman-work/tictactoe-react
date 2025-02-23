@@ -132,7 +132,10 @@ const TicTacToe = () => {
   const won = (winner, arr) => {
     setLock(true);
     setMatchWin(true);
-    audio.play();    
+    
+    if(sound){
+      audio.play();    
+    }
     
     if(winner === "x") {
       titleRef.current.innerHTML = `Congratulations: <img src='${cross_icon}'/> wins`
