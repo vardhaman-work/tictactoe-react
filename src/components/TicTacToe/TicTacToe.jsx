@@ -38,32 +38,33 @@ const TicTacToe = () => {
       setCount(++count);
     }
 
+    e.target.classList.add('active');
+    //e.currentTarget.className += " active";
+
     checkWin();
   }
 
   const checkWin = () => {
     if(data[0]===data[1] && data[1]===data[2] && data[2]!==""){
-      won(data[2])
+      won(data[2], [0,1,2])
     } else if(data[3]===data[4] && data[4]===data[5] && data[5]!=="") {
-      won(data[5])
+      won(data[5], [3,4,5])
     } else if(data[6]===data[7] && data[7]===data[8] && data[8]!=="") {
-      won(data[8])
+      won(data[8], [6,7,8])
     } else if(data[0]===data[3] && data[3]===data[6] && data[6]!=="") {
-      won(data[6])
+      won(data[6], [0,3,6])
     } else if(data[1]===data[4] && data[4]===data[7] && data[7]!=="") {
-      won(data[7])
+      won(data[7], [1,4,7])
     } else if(data[2]===data[5] && data[5]===data[8] && data[8]!=="") {
-      won(data[8])
+      won(data[8], [2,5,8])
     } else if(data[0]===data[4] && data[4]===data[8] && data[8]!=="") {
-      won(data[8])
-    } else if(data[0]===data[1] && data[1]===data[2] && data[2]!=="") {
-      won(data[2])
+      won(data[8], [0,4,8])
     } else if(data[2]===data[4] && data[4]===data[6] && data[6]!=="") {
-      won(data[6])
+      won(data[6], [2,4,6])
     }
   }
 
-  const won = (winner) => {
+  const won = (winner, arr) => {
     setLock(true);
 
     if(winner === "x") {
@@ -71,6 +72,13 @@ const TicTacToe = () => {
     } else {
       titleRef.current.innerHTML = `Congratulations: <img src='${circle_icon}'/> wins`
     }
+
+    box_array.map((e,i) => {
+      if(arr.includes(i)){
+        e.current.classList.add('active', 'win');
+      }
+      return true;
+    })
   }
 
   const reset = () => {
@@ -80,11 +88,10 @@ const TicTacToe = () => {
 
     box_array.map((e) => {
       e.current.innerHTML = "";
+      e.current.classList.remove('active', 'win');
       return true;
     })
   }
-
-  console.log(data)
 
   return (
     <div className='container'>
