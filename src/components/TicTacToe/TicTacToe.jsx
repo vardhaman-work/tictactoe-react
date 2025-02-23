@@ -168,7 +168,7 @@ const TicTacToe = () => {
   }
 
   const checkboxChangeHandler = () => {
-      setSound(!sound);
+    setAutoPlay(!autoPlay);
   }
 
   const soundChangeHandler = () => {
