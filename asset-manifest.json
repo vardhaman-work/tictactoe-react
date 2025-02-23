@@ -1,16 +1,17 @@
 {
   "files": {
-    "main.css": "/tictactoe-react/static/css/main.005790d6.css",
-    "main.js": "/tictactoe-react/static/js/main.df9a0a5c.js",
+    "main.css": "/tictactoe-react/static/css/main.4edfad29.css",
+    "main.js": "/tictactoe-react/static/js/main.a3d8e1f1.js",
     "static/js/453.f80d8396.chunk.js": "/tictactoe-react/static/js/453.f80d8396.chunk.js",
     "static/media/sound.mp3": "/tictactoe-react/static/media/sound.e9967bf9afa46e560ea1.mp3",
+    "static/media/setting.svg": "/tictactoe-react/static/media/setting.e958d028be02ee650cdc8fcd41466de2.svg",
     "index.html": "/tictactoe-react/index.html",
-    "main.005790d6.css.map": "/tictactoe-react/static/css/main.005790d6.css.map",
-    "main.df9a0a5c.js.map": "/tictactoe-react/static/js/main.df9a0a5c.js.map",
+    "main.4edfad29.css.map": "/tictactoe-react/static/css/main.4edfad29.css.map",
+    "main.a3d8e1f1.js.map": "/tictactoe-react/static/js/main.a3d8e1f1.js.map",
     "453.f80d8396.chunk.js.map": "/tictactoe-react/static/js/453.f80d8396.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.005790d6.css",
-    "static/js/main.df9a0a5c.js"
+    "static/css/main.4edfad29.css",
+    "static/js/main.a3d8e1f1.js"
   ]
 }
