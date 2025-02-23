@@ -10,6 +10,7 @@ import "./TicTacToe.css";
 import circle_icon from "../Assets/circle.png";
 import cross_icon from "../Assets/cross.png";
 import Sound from "../Assets/sound.mp3";
+import setting_icon from "../Assets/setting.svg";
 
 let data = ["","","","","","","","",""]
 
@@ -33,6 +34,7 @@ const TicTacToe = () => {
 
   let audio = new Audio(Sound);
 
+  let boardRef = useRef(null);
   let box1 = useRef(null);
   let box2 = useRef(null);
   let box3 = useRef(null);
@@ -66,6 +68,7 @@ const TicTacToe = () => {
     checkWin();
 
     if(autoPlay && e.isTrusted){
+      boardRef.current.classList.add("pe-none")
       setTimeout(autoPlayHandler,1000)
     }
   }
@@ -85,8 +88,7 @@ const TicTacToe = () => {
           acc.push(index);
         }
         return acc;
-      }
-      , [])
+      }, [])
       
       const random = Math.floor(Math.random() * emptyIndexes.length);
       const randomIndex = emptyIndexes[random];
@@ -98,11 +100,11 @@ const TicTacToe = () => {
           }
           return true;
         })
+
+        boardRef.current.classList.remove("pe-none")
       }
     }
   }
-
-  
 
   const checkWin = () => {
     if(data[0]===data[1] && data[1]===data[2] && data[2]!==""){
@@ -131,8 +133,8 @@ const TicTacToe = () => {
   const won = (winner, arr) => {
     setLock(true);
     setMatchWin(true);
-    audio.play();
-
+    audio.play();    
+    
     if(winner === "x") {
       titleRef.current.innerHTML = `Congratulations: <img src='${cross_icon}'/> wins`
     } else {
@@ -142,9 +144,11 @@ const TicTacToe = () => {
     box_array.map((e,i) => {
       if(arr.includes(i)){
         e.current.classList.add('active', 'win');
+      } else {
+        e.current.classList.add("pe-none");
       }
       return true;
-    })
+    });
   }
 
   const reset = () => {
@@ -152,12 +156,17 @@ const TicTacToe = () => {
     setMatchWin(false);
     data = ["","","","","","","","",""]
     titleRef.current.innerHTML = 'Tic Tac Toe Game in <span>React</span>';
+    boardRef.current.classList.remove("pe-none");
 
     box_array.map((e) => {
       e.current.innerHTML = "";
-      e.current.classList.remove('active', 'win');
+      e.current.classList.remove('active', 'win', 'pe-none');
       return true;
     })
+  }
+
+  const checkboxChangeHandler = () => {
+      setAutoPlay(!autoPlay);
   }
 
   const formSubmitHandler = (e) => {
@@ -176,7 +185,7 @@ const TicTacToe = () => {
         Tic Tac Toe Game in <span>React</span>
       </h1>
       
-      <div className='board'>
+      <div ref={boardRef} className='board'>
         <div className="boxes" ref={box1} onClick={(e) => { toggle(e, 0) }}></div>
         <div className="boxes" ref={box2} onClick={(e) => { toggle(e, 1) }}></div>
         <div className="boxes" ref={box3} onClick={(e) => { toggle(e, 2) }}></div>       
@@ -188,6 +197,7 @@ const TicTacToe = () => {
         <div className="boxes" ref={box9} onClick={(e) => { toggle(e, 8) }}></div>        
       </div>
       <button className="reset" onClick={() => reset()}>Reset</button>
+      <button onClick={handleShow} className='setting_btn'><img src={setting_icon} alt='setting' width={20} height={20} /></button>
       
       <Modal show={show}>
         <Modal.Header>
@@ -201,7 +211,7 @@ const TicTacToe = () => {
             </Col>
             <Col xs="auto">
               <label className="switch">
-                <input name='autoplay' type="checkbox" />
+                <input name='autoplay' type="checkbox" onChange={checkboxChangeHandler} checked={autoPlay} />
                 <span className="slider round"></span>
               </label>
             </Col>
